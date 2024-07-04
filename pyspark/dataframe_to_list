@@ -1,1 +1,53 @@
+from pyspark.sql import SparkSession
+from pyspark.sql.functions import spark_partition_id
+import pandas as pd
+
+# Initialize SparkSession
+spark = SparkSession.builder \
+    .appName("PartitionExample") \
+    .getOrCreate()
+
+# Sample data
+data = [
+    (1, "Logesh", "India", 5000),
+    (2, "Jane", "UK", 6000),
+    (3, "Subasree", "USA", 5500),
+    (4, "Smith", "Canada", 4800),
+    (5, "Emily", "UK", 6200),
+    (6, "David", "India", 5100),
+    (7, "Alice", "Germany", 5300),
+    (8, "Bob", "USA", 5800),
+    (9, "Eva", "UK", 6100),
+    (10, "Frank", "Germany", 5400),
+    (11, "Grace", "Canada", 5000),
+    (12, "Harry", "UK", 6300),
+    (13, "Kathir", "India", 4700)
+]
+
+# Create a PySpark DataFrame
+columns = ["id", "name", "country", "salary"]
+df = spark.createDataFrame(data, columns)
+
+# Repartition the DataFrame by country
+df_repartitioned = df.repartition("country")
+
+# Add a column to show partition ID
+df_with_partition_id = df_repartitioned.withColumn("partition_id", spark_partition_id())
+
+# Show the DataFrame with partition ID
+df_with_partition_id.show()
+
+# Convert to Pandas DataFrame
+pandas_df = df_with_partition_id.toPandas()
+
+# Convert Pandas DataFrame to List of Dictionaries
+list_of_dicts = pandas_df.to_dict(orient='records')
+
+# Print the result
+print("\nList of Dictionaries with Partition ID:")
+for item in list_of_dicts:
+    print(item)
+
+# Stop SparkSession
+spark.stop()
 

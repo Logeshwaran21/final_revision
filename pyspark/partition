@@ -1,1 +1,24 @@
+from pyspark.sql.functions import *
+data = [(i,) for i in range(400)]
+df = spark.createDataFrame(data, ["number"])
+df.display()
+
+df1=df.rdd.getNumPartitions()
+print(df1)
+
+df2=df.withColumn("Partition_id",spark_partition_id())
+df2.display()
+
+df3=df2.groupBy("partition_id").count()
+df3.display()
+df4=df.coalesce(4)
+df5=df4.rdd.getNumPartitions()
+display(df5)
+
+df6=df4.withColumn("new_Partition_id",spark_partition_id())
+df6.display()
+
+df7=df6.groupBy("new_partition_id").count()
+df7.display()
+
 

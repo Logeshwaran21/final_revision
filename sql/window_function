@@ -1,1 +1,60 @@
+use Daily_practice
+
+
+CREATE TABLE employees (
+    id INT ,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary DECIMAL(10, 2)
+);
+
+INSERT INTO employees (id, name, department, salary) VALUES
+(1, 'Alice', 'Engineering', 90000),
+(1, 'Alice', 'Engineering', 90000),
+(2, 'Bob', 'HR', 60000),
+(3, 'Charlie', 'Engineering', 75000),
+(4, 'David', 'Engineering', 90000),
+(5, 'Eve', 'HR', 80000),
+(6, 'Frank', 'Engineering', 90000),
+(7, 'Grace', 'HR', 60000),
+(8, 'Heidi', 'Finance', 70000),
+(9, 'Ivan', 'Finance', 80000),
+(10, 'Judy', 'Finance', 90000);
+
+select * from employees
+
+--remove duplicates
+
+WITH RankedEmployees AS (
+    SELECT
+        id,
+        name,
+        department,
+        salary,
+        ROW_NUMBER() OVER (PARTITION BY id, name, department, salary ORDER BY id) AS rn
+    FROM
+        employees
+)
+DELETE FROM employees
+WHERE (id, name, department, salary) IN (
+    SELECT id, name, department, salary
+    FROM RankedEmployees
+    WHERE rn > 1
+);
+
+
+
+WITH RankedSalaries AS (
+    SELECT
+        salary,
+        DENSE_RANK() OVER (ORDER BY salary DESC) AS rank
+    FROM
+        employees
+)
+SELECT
+    salary
+FROM
+    RankedSalaries
+WHERE
+    rank = 2; -- Change this number to find the nth highest salary
 

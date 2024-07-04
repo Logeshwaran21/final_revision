@@ -1,1 +1,33 @@
+def divide_numbers(a, b):
+    try:
+        result = a / b
+        return result
+    except ZeroDivisionError as e:
+        print(f"Error: Division by zero! Details: {e}")
+    except TypeError as e:
+        print(f"Error: Invalid types for division! Details: {e}")
+    except Exception as e:
+        print(f"Error: An unexpected error occurred! Details: {e}")
+    finally:
+        print("Division operation completed.\n")
 
+def main():
+    #Handling ZeroDivisionError
+    print("Example 1: Handling ZeroDivisionError")
+    divide_numbers(10, 0)
+
+    #Handling TypeError
+    print("Example 2: Handling TypeError")
+    divide_numbers(10, '2')
+
+    #Handling other exceptions
+    print("Example 3: Handling other exceptions")
+    divide_numbers(10, None)
+
+    # Example 4: Successful division
+    print("Example 4: Successful division")
+    result = divide_numbers(10, 2)
+    print(f"Result of division: {result}")
+
+if __name__ == "__main__":
+    main()

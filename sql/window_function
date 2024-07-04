@@ -24,6 +24,14 @@ INSERT INTO employees (id, name, department, salary) VALUES
 select * from employees
 
 --remove duplicates
+    SELECT
+        id,
+        name,
+        department,
+        salary,
+        ROW_NUMBER() OVER (PARTITION BY id, name, department, salary ORDER BY id) AS rn
+    FROM
+        employees
 
 WITH RankedEmployees AS (
     SELECT
@@ -35,26 +43,27 @@ WITH RankedEmployees AS (
     FROM
         employees
 )
-DELETE FROM employees
-WHERE (id, name, department, salary) IN (
-    SELECT id, name, department, salary
-    FROM RankedEmployees
-    WHERE rn > 1
-);
+
+delete from RankedEmployees
+where rn > 1;
 
 
+    SELECT
+        *,
+        DENSE_RANK() OVER (ORDER BY salary DESC) AS rank
+    FROM
+        employees
 
 WITH RankedSalaries AS (
     SELECT
-        salary,
+        *,
         DENSE_RANK() OVER (ORDER BY salary DESC) AS rank
     FROM
         employees
 )
 SELECT
-    salary
+    *
 FROM
     RankedSalaries
 WHERE
     rank = 2; -- Change this number to find the nth highest salary
-

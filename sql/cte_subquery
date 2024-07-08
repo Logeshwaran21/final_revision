@@ -1,0 +1,46 @@
+-- Subquery in the WHERE clause
+SELECT FirstName, LastName, Department
+FROM Employee
+WHERE Department = (
+    SELECT TOP 1 Department 
+    FROM Employees 
+    WHERE FirstName = 'Jane' AND LastName = 'Smith'
+);
+
+-- Subquery in the SELECT clause
+SELECT 
+    EmployeeID, 
+    FirstName, 
+    LastName, 
+    Department,
+    (SELECT COUNT(*) 
+     FROM Employee E 
+     WHERE E.Department = Employee.Department) AS DepartmentCount
+FROM Employee;
+
+-- Simple CTE
+WITH Managers AS (
+    SELECT EmployeeID, FirstName, LastName, Position
+    FROM Employee
+    WHERE Position = 'Manager'
+)
+SELECT * FROM Managers;
+
+-- Simple CTE
+WITH Managers AS (
+    SELECT EmployeeID, FirstName, LastName, Position
+    FROM Employee
+    WHERE Position = 'Manager'
+)
+SELECT * FROM Managers;
+
+
+-- CTE with aggregation
+WITH AvgSalaryByDept AS (
+    SELECT Department, AVG(Salary) AS AvgSalary
+    FROM Employee
+    GROUP BY Department
+)
+SELECT Department, AvgSalary
+FROM AvgSalaryByDept
+WHERE AvgSalary > 70000;

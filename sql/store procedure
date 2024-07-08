@@ -1,1 +1,48 @@
+-- Creating the Employees table
+CREATE TABLE Employee (
+    EmployeeID INT PRIMARY KEY,
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50),
+    Position NVARCHAR(50),
+    Department NVARCHAR(50)
+);
+
+-- Inserting sample data into Employees table
+INSERT INTO Employee (EmployeeID, FirstName, LastName, Position, Department)
+VALUES 
+(1, 'John', 'Doe', 'Manager', 'Sales'),
+(2, 'Jane', 'Smith', 'Developer', 'IT'),
+(3, 'Alice', 'Johnson', 'Analyst', 'Finance');
+
+-- Creating a procedure to get employee details by ID
+CREATE PROCEDURE GetEmployeeDetails @EmployeeID INT
+AS
+BEGIN
+    SELECT EmployeeID, FirstName, LastName, Position
+    FROM Employee
+    WHERE EmployeeID = @EmployeeID;
+END;
+
+-- Executing the procedure
+EXEC GetEmployeeDetails @EmployeeID = 1;
+
+-- Altering the procedure to include department details
+ALTER PROCEDURE GetEmployeeDetails @EmployeeID INT
+AS
+BEGIN
+    SELECT EmployeeID, FirstName, LastName, Position, Department
+    FROM Employee
+    WHERE EmployeeID = @EmployeeID;
+END;
+
+
+-- Executing the altered procedure
+EXEC GetEmployeeDetails @EmployeeID = 1;
+
+
+-- Dropping the procedure
+DROP PROCEDURE GetEmployeeDetails;
+
+
+
 

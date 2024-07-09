@@ -1,0 +1,18 @@
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+def student_data():
+    number_of_students = int(input(("enter the number of students: ")))
+    student_name = {}
+    for i in range(number_of_students):
+        input_data = input("Enter student name and marks (seperated by space): ").split()
+        name = input_data[0]
+        marks =list(map(float,input_data[1:]))
+        student_name[name]= marks
+    name_student = input("enter the name of the student: ")
+    marks = student_name[name_student]
+    percentage = sum(marks)/len(marks)
+    logging.debug(percentage)
+
+
+
+

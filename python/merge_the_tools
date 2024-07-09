@@ -1,0 +1,17 @@
+def merge_the_tools():
+    input_string = input("enter the string: ")
+    substring_length = int(input("Enter the length of substring: "))
+    length = len(input_string)
+    result = []
+    for i in range(0,length,substring_length):
+        substring = input_string[i:i+substring_length]
+        unique = []
+
+        for ch in substring:
+            if ch not in unique:
+                unique.append(ch)
+        result.append(''.join(unique))
+    for out in result:
+        print(out)
+merge_the_tools()
+

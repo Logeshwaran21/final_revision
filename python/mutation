@@ -1,0 +1,10 @@
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+def mutation():
+    input_string=input("enter the string: ").strip() #strip is used to remove white spaces, lines
+    print(input_string)
+    position=int(input("enter the position: "))
+    charcter = input("enter the character: ")
+    result = input_string[:position-1]+charcter+input_string[position:]
+    logging.debug(result)
+

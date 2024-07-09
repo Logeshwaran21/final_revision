@@ -1,0 +1,12 @@
+import logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+def sec_max_num():
+    score_num = int(input("Enter the number of score: "))
+    score_list = []
+    result =[]
+    for i in range(score_num):
+        score_input = int(input(f"Enter the {i+1} score: "))
+        score_list.append(score_input)
+    remove_duplicates = list(set(score_list))
+    result=remove_duplicates[-2]
+    logging.debug(result)

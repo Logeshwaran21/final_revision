@@ -1,0 +1,10 @@
+def string_formatting():
+    int_input = int(input("Enter the number: "))
+    space = 8
+    for i in range(1,int_input+1):
+        dec = str(i)
+        octal = oct(i)[2:]
+        hexadecimal = hex(i)[2:]
+        Binary = bin(i)[2:]
+        print(dec,octal.rjust(space),hexadecimal.rjust(space),Binary.rjust(space)) #rjust is used to give space.
+string_formatting()

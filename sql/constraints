@@ -1,0 +1,25 @@
+create table constraints (
+emp_id Int primary key,
+ename varchar(30) not null,
+job_desc varchar(30) Default 'unassigned',
+salary INT,
+pan varchar(10) unique,
+check (salary>10000)
+);
+
+drop table constraints
+
+INSERT INTO constraints (emp_id, ename, salary, pan)
+VALUES (1, 'logesh', 300000, 'sljgngn324'),
+       (2, 'logeshwaran',  100100, 'sdsjgngn32'),
+       (3, 'eshwaran',  100100, 'sdsjngn32');
+
+select * from constraints
+
+--alter the constraints
+Alter table constraints
+Alter column ename varchar(30) not null;
+
+INSERT INTO constraints
+VALUES (4,Null,'HR', 300000, 'fljgngn324')
+

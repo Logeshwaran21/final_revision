@@ -35,7 +35,7 @@ WITH Managers AS (
 SELECT * FROM Managers;
 
 
--- CTE with aggregation
+-- CTE with Aggregation
 WITH AvgSalaryByDept AS (
     SELECT Department, AVG(Salary) AS AvgSalary
     FROM Employee

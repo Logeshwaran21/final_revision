@@ -1,0 +1,22 @@
+# Sample data
+data = [
+    (1, "John", "Doe", 29),
+    (2, "Jane", "Doe", 25),
+    (3, "Mike", "Smith", 35)
+]
+
+# Define schema
+columns = ["id", "first_name", "last_name", "age"]
+
+# Create DataFrame
+df = spark.createDataFrame(data, columns)
+
+# Write DataFrame to a managed Delta table
+df.write.format("delta").saveAsTable("dbfs:/dbfs/FileStore/sample_data")
+
+# Verify table creation
+spark.sql("SHOW TABLES IN default").show()
+
+# Query the Delta table
+df_from_table = spark.sql("SELECT * FROM default.managed_delta_table")
+df_from_table.show()

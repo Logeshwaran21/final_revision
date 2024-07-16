@@ -1,0 +1,39 @@
+from pyspark.sql import SparkSession
+
+# Initialize Spark session
+spark = SparkSession.builder \
+    .appName("TransformationsAndActions") \
+    .getOrCreate()
+
+# Sample data
+data = [
+    (1, "John", 29),
+    (2, "Jane", 25),
+    (3, "Mike", 35),
+    (4, "Alice", 28),
+    (5, "Bob", 32)
+]
+
+# Define schema
+columns = ["id", "name", "age"]
+
+# Create DataFrame
+df = spark.createDataFrame(data, columns)
+
+
+# Filter: Keep only rows where age is greater than 30
+filtered_df = df.filter(df.age > 30)
+
+# Select: Keep only the name and age columns
+selected_df = filtered_df.select("name", "age")
+
+# Action: Show the result
+selected_df.show()
+
+# Action: Collect the result as a list of rows
+result = selected_df.collect()
+
+# Print the collected result
+for row in result:
+    print(row)
+
